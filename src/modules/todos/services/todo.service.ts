@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common'
 import { TodoRepository } from '../repositories/todo.repository.js'
 import { type TodoCreateDto } from '../dtos/todo-create.dto.js'
 import { Todo } from '../entities/todo.entity.js'
+import { type TodoUpdateDto } from '../dtos/todo-update.dto.js'
+import { KnownError } from '../../../utils/Exceptions/errors.js'
 
 @Injectable()
 export class TodoService {
@@ -26,5 +28,25 @@ export class TodoService {
 
   async getAllNonCompletedByUserUuid (userUuid: string): Promise<Todo[]> {
     return await this.todoRepository.findAllNonCompletedByUserUuid(userUuid)
+  }
+
+  async update (uuid: string, dto: TodoUpdateDto, userUuid: string): Promise<Todo> {
+    const todo = await this.todoRepository.findOneOrFail(uuid)
+
+    if (todo.isCompleted) {
+      throw new KnownError('forbidden').setDesc('The todo is already completed and cannot be updated.')
+    }
+
+    if (todo.userUuid !== userUuid) {
+      throw new KnownError('user_is_not_owner_of_resource')
+    }
+
+    todo.description = dto.description ?? todo.description
+    todo.deadline = dto.deadline ?? todo.deadline
+    todo.title = dto.title ?? todo.title
+
+    await this.todoRepository.update(todo)
+
+    return todo
   }
 }

@@ -10,6 +10,10 @@ export const knownErrors = {
   not_editable: {
     detail: 'This object is not editable',
     status: 400
+  },
+  user_is_not_owner_of_resource: {
+    detail: 'The user is not the owner of the resource it is trying to access',
+    status: 403
   }
 }
 

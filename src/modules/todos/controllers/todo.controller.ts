@@ -1,7 +1,7 @@
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import {
   Body,
-  Controller, Get, HttpCode, Post, Req
+  Controller, Get, HttpCode, Param, Patch, Post, Req
 } from '@nestjs/common'
 
 import { TodoService } from '../services/todo.service.js'
@@ -12,6 +12,7 @@ import { Request } from '../../auth/guards/auth.guard.js'
 import { Permission } from '../../permissions/permission.enum.js'
 import { Permissions } from '../../permissions/permissions.decorator.js'
 import { TodoIndexTransformer, type TodoIndexTransformerType } from '../transformers/todo-index.transformer.js'
+import { TodoUpdateDto } from '../dtos/todo-update.dto.js'
 
 @ApiTags('Todo')
 @Controller('Todo')
@@ -44,5 +45,14 @@ export class TodoController {
   async getAllNonCompletedByUserUuid (@Req() req: Request): Promise<TodoIndexTransformerType[]> {
     const todos = await this.todoService.getAllNonCompletedByUserUuid(req.auth.user.uuid)
     return new TodoIndexTransformer().array(todos)
+  }
+
+  @Patch('/:uuid')
+  @HttpCode(200)
+  @ApiOkResponse(todoGetAllOfUserResponse)
+  @Permissions(Permission.TODO_UPDATE)
+  async update (@Param('uuid') uuid: string, @Body() dto: TodoUpdateDto, @Req() req: Request): Promise<TodoIndexTransformerType> {
+    const todo = await this.todoService.update(uuid, dto, req.auth.user.uuid)
+    return new TodoIndexTransformer().item(todo)
   }
 }

@@ -14,6 +14,10 @@ export class TodoRepository {
     return await this.repository.save(todo)
   }
 
+  async update (todo: Todo): Promise<void> {
+    await this.repository.update({ uuid: todo.uuid }, todo)
+  }
+
   async findAllByUserUuid (userUuid: string): Promise<Todo[]> {
     return await this.repository.find({
       where: { userUuid }
@@ -25,5 +29,9 @@ export class TodoRepository {
       where: { userUuid, isCompleted: false },
       order: { deadline: 'ASC' }
     })
+  }
+
+  async findOneOrFail (uuid: string): Promise<Todo> {
+    return await this.repository.findOneOrFail({ where: { uuid } })
   }
 }
