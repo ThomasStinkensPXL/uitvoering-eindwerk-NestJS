@@ -13,4 +13,10 @@ export class TodoRepository {
   async save (todo: Todo): Promise<Todo> {
     return await this.repository.save(todo)
   }
+
+  async findAllByUserUuid (userUuid: string): Promise<Todo[]> {
+    return await this.repository.find({
+      where: { userUuid }
+    })
+  }
 }

@@ -19,4 +19,8 @@ export class TodoService {
 
     return await this.todoRepository.save(todo)
   }
+
+  async getAllByUserUuid (userUuid: string): Promise<Todo[]> {
+    return await this.todoRepository.findAllByUserUuid(userUuid)
+  }
 }
