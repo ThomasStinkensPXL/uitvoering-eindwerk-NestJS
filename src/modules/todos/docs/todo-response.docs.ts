@@ -8,7 +8,14 @@ export const todoCreatedResponse: ApiResponseOptions = {
   type: TodoCreatedTransformerType
 }
 
-export const todoGetAllResponse: ApiResponseOptions = {
+export const todoGetAllOfUserResponse: ApiResponseOptions = {
+  status: 200,
+  description: 'The todos have been successfully been retrieved',
+  type: TodoIndexTransformerType,
+  isArray: true
+}
+
+export const todoGetAllNonActivatedOfUserResponse: ApiResponseOptions = {
   status: 200,
   description: 'The todos have been successfully been retrieved',
   type: TodoIndexTransformerType,

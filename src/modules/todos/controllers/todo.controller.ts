@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common'
 
 import { TodoService } from '../services/todo.service.js'
-import { todoCreatedResponse, todoGetAllResponse } from '../docs/todo-response.docs.js'
+import { todoCreatedResponse, todoGetAllOfUserResponse } from '../docs/todo-response.docs.js'
 import { TodoCreateDto } from '../dtos/todo-create.dto.js'
 import { TodoCreatedTransformer, type TodoCreatedTransformerType } from '../transformers/todo-created.transformer.js'
 import { Request } from '../../auth/guards/auth.guard.js'
@@ -30,10 +30,19 @@ export class TodoController {
 
   @Get('/user')
   @HttpCode(200)
-  @ApiOkResponse(todoGetAllResponse)
+  @ApiOkResponse(todoGetAllOfUserResponse)
   @Permissions(Permission.TODO_READ)
   async getAllByUserUuid (@Req() req: Request): Promise<TodoIndexTransformerType[]> {
     const todos = await this.todoService.getAllByUserUuid(req.auth.user.uuid)
+    return new TodoIndexTransformer().array(todos)
+  }
+
+  @Get('/user/non-completed')
+  @HttpCode(200)
+  @ApiOkResponse(todoGetAllOfUserResponse)
+  @Permissions(Permission.TODO_READ)
+  async getAllNonCompletedByUserUuid (@Req() req: Request): Promise<TodoIndexTransformerType[]> {
+    const todos = await this.todoService.getAllNonCompletedByUserUuid(req.auth.user.uuid)
     return new TodoIndexTransformer().array(todos)
   }
 }

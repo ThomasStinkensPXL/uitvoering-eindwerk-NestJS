@@ -19,4 +19,11 @@ export class TodoRepository {
       where: { userUuid }
     })
   }
+
+  async findAllNonCompletedByUserUuid (userUuid: string): Promise<Todo[]> {
+    return await this.repository.find({
+      where: { userUuid, isCompleted: false },
+      order: { deadline: 'ASC' }
+    })
+  }
 }
