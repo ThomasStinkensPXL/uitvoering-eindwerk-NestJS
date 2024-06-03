@@ -14,6 +14,10 @@ export const knownErrors = {
   user_is_not_owner_of_resource: {
     detail: 'The user is not the owner of the resource it is trying to access',
     status: 403
+  },
+  todo_already_completed: {
+    detail: 'The todo is already completed',
+    status: 400
   }
 }
 

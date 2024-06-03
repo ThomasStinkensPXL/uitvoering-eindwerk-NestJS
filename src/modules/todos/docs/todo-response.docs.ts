@@ -21,3 +21,15 @@ export const todoGetAllNonActivatedOfUserResponse: ApiResponseOptions = {
   type: TodoIndexTransformerType,
   isArray: true
 }
+
+export const todoPatchResponse: ApiResponseOptions = {
+  status: 200,
+  description: 'The todo has been successfully been updated',
+  type: TodoIndexTransformerType
+}
+
+export const todoCompletedResponse: ApiResponseOptions = {
+  status: 200,
+  description: 'The todo has been successfully been marked as complete',
+  type: TodoIndexTransformerType
+}
