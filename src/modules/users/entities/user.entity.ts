@@ -30,8 +30,8 @@ export class User {
   @Index({ unique: true })
   email: string
 
-  @Column({ type: 'timestamp', precision: 3 })
-  lastCompletionDate: Date
+  @Column({ type: 'timestamp', precision: 3, nullable: true })
+  lastCompletionDate: Date | null
 
   @Column({ type: 'varchar' })
   password: string

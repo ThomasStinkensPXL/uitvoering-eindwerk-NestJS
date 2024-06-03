@@ -1,5 +1,5 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, Relation } from 'typeorm';
-import { User } from '../../users/entities/user.entity.js';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, Relation } from 'typeorm'
+import { User } from '../../users/entities/user.entity.js'
 
 @Entity()
 export class Todo {
@@ -24,7 +24,6 @@ export class Todo {
   @Column({ type: 'boolean' })
   isCompleted: boolean
 
-  @Column({ type: 'timestamp', precision: 3 })
-  completedAt: Date
+  @Column({ type: 'timestamp', precision: 3, nullable: true })
+  completedAt: Date | null
 }
-

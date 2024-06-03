@@ -11,4 +11,9 @@ export enum Permission {
   ROLE_CREATE = 'role.create',
   ROLE_UPDATE = 'role.update',
   ROLE_DELETE = 'role.delete',
+
+  TODO_READ = 'todo.read',
+  TODO_CREATE = 'todo.create',
+  TODO_UPDATE = 'todo.update',
+  TODO_DELETE = 'todo.delete',
 }

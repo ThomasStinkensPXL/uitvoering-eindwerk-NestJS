@@ -50,6 +50,7 @@ export class UserService {
     const user = this.userRepository.create(dto)
 
     user.password = await bcrypt.hash(dto.password, 10)
+    user.lastCompletionDate = null
 
     return await this.userRepository.save(user)
   }

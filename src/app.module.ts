@@ -16,6 +16,7 @@ import { RedisCacheModule } from './utils/cache/cache.module.js'
 import configuration from './config/env/configuration.js'
 import { StatusModule } from './modules/status/modules/status.module.js'
 import { sslHelper } from './config/sql/utils/typeorm.js'
+import { TodoModule } from './modules/todos/modules/todo.module.js'
 
 @Module({
   imports: [
@@ -41,7 +42,8 @@ import { sslHelper } from './config/sql/utils/typeorm.js'
     RoleModule,
     PermissionModule,
     RedisCacheModule,
-    StatusModule
+    StatusModule,
+    TodoModule
   ],
   controllers: [],
   providers: [
